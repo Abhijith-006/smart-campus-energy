@@ -6,107 +6,74 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Smart Campus Energy Monitoring</title>
 <style>
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    background: #f1f5f9;
-    color: #1e293b;
-}
-header {
-    background: #14532d;
-    color: white;
-    padding: 24px;
-    text-align: center;
-}
-main {
-    max-width: 1000px;
-    margin: 25px auto;
-    padding: 0 16px;
-}
-h2 { color: #166534; }
-.buildings {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 18px;
-}
-.card {
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 2px 8px #00000012;
-}
-.consumption {
-    font-size: 28px;
-    font-weight: bold;
-    color: #15803d;
-}
-.target { color: #475569; }
-.warning {
-    background: #fee2e2;
-    color: #991b1b;
-    padding: 10px;
-    border-radius: 6px;
-    font-weight: bold;
-}
-.safe {
-    background: #dcfce7;
-    color: #166534;
-    padding: 10px;
-    border-radius: 6px;
-}
-footer {
-    text-align: center;
-    padding: 20px;
-    color: #64748b;
-}
+body{font-family:Arial,sans-serif;margin:0;background:#f1f5f9;color:#1e293b}
+header{background:#14532d;color:white;padding:24px;text-align:center}
+main{max-width:1000px;margin:25px auto;padding:0 16px}
+h2{color:#166534}
+.summary,.buildings{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px}
+.card,.summary-card{background:white;padding:20px;border-radius:10px;box-shadow:0 2px 8px #00000012}
+.summary-card{border-left:5px solid #16a34a}
+.summary-card p{font-size:24px;font-weight:bold;margin:8px 0;color:#166534}
+.consumption{font-size:28px;font-weight:bold;color:#15803d}
+.target{color:#475569}
+.warning{background:#fee2e2;color:#991b1b;padding:10px;border-radius:6px;font-weight:bold}
+.safe{background:#dcfce7;color:#166534;padding:10px;border-radius:6px}
+footer{text-align:center;padding:20px;color:#64748b}
 </style>
 </head>
 <body>
-
 <header>
-    <h1>Smart Campus Energy Monitoring System</h1>
-    <p>Daily Electricity Consumption and Energy-Saving Targets</p>
+<h1>Smart Campus Energy Monitoring System</h1>
+<p>Daily Electricity Consumption and Energy-Saving Targets</p>
 </header>
-
 <main>
-    <h2>Building Energy Dashboard</h2>
-    <p>Daily electricity consumption is monitored against a warning limit of 100 kWh.</p>
+<h2>Campus Energy Summary</h2>
+<div class="summary">
+<div class="summary-card">
+<h3>Total Campus Consumption</h3>
+<p id="total">320 kWh</p>
+<small>Combined daily electricity usage</small>
+</div>
+<div class="summary-card">
+<h3>Highest Energy Usage</h3>
+<p id="highest">Academic Block</p>
+<small id="highestUsage">125 kWh per day</small>
+</div>
+</div>
 
-    <div class="buildings">
-
-        <div class="card">
-            <h3>Academic Block</h3>
-            <p class="consumption">125 kWh</p>
-            <p class="target">Energy-saving target: 100 kWh/day</p>
-            <div class="warning">
-                Warning: Consumption exceeds the limit by 25 kWh.
-            </div>
-        </div>
-
-        <div class="card">
-            <h3>Library</h3>
-            <p class="consumption">85 kWh</p>
-            <p class="target">Energy-saving target: 90 kWh/day</p>
-            <div class="safe">
-                Consumption is within the 100 kWh warning limit.
-            </div>
-        </div>
-
-        <div class="card">
-            <h3>Hostel Block</h3>
-            <p class="consumption">110 kWh</p>
-            <p class="target">Energy-saving target: 95 kWh/day</p>
-            <div class="warning">
-                Warning: Consumption exceeds the limit by 10 kWh.
-            </div>
-        </div>
-
-    </div>
+<h2>Building Energy Dashboard</h2>
+<p>Daily electricity consumption is monitored against a warning limit of 100 kWh.</p>
+<div class="buildings" id="buildings"></div>
 </main>
+<footer>Smart Campus Energy Monitoring | Assessment 10 — Set I</footer>
 
-<footer>
-    Smart Campus Energy Monitoring | Sample Data for Assessment 10
-</footer>
+<script>
+const buildings=[
+{name:"Academic Block",consumption:125,target:100},
+{name:"Library",consumption:85,target:90},
+{name:"Hostel Block",consumption:110,target:95}
+];
 
+function renderDashboard(){
+const total=buildings.reduce((sum,b)=>sum+b.consumption,0);
+const highest=buildings.reduce((a,b)=>a.consumption>b.consumption?a:b);
+document.getElementById("total").textContent=total+" kWh";
+document.getElementById("highest").textContent=highest.name;
+document.getElementById("highestUsage").textContent=highest.consumption+" kWh per day";
+
+document.getElementById("buildings").innerHTML=buildings.map(b=>{
+const over=b.consumption-100;
+return `<div class="card">
+<h3>${b.name}</h3>
+<p class="consumption">${b.consumption} kWh</p>
+<p class="target">Energy-saving target: ${b.target} kWh/day</p>
+${over>0
+? `<div class="warning">Warning: Consumption exceeds the limit by ${over} kWh.</div>`
+: `<div class="safe">Consumption is within the 100 kWh warning limit.</div>`}
+</div>`;
+}).join("");
+}
+renderDashboard();
+</script>
 </body>
 </html>
