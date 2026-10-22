@@ -1,0 +1,112 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Smart Campus Energy Monitoring</title>
+<style>
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background: #f1f5f9;
+    color: #1e293b;
+}
+header {
+    background: #14532d;
+    color: white;
+    padding: 24px;
+    text-align: center;
+}
+main {
+    max-width: 1000px;
+    margin: 25px auto;
+    padding: 0 16px;
+}
+h2 { color: #166534; }
+.buildings {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 18px;
+}
+.card {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px #00000012;
+}
+.consumption {
+    font-size: 28px;
+    font-weight: bold;
+    color: #15803d;
+}
+.target { color: #475569; }
+.warning {
+    background: #fee2e2;
+    color: #991b1b;
+    padding: 10px;
+    border-radius: 6px;
+    font-weight: bold;
+}
+.safe {
+    background: #dcfce7;
+    color: #166534;
+    padding: 10px;
+    border-radius: 6px;
+}
+footer {
+    text-align: center;
+    padding: 20px;
+    color: #64748b;
+}
+</style>
+</head>
+<body>
+
+<header>
+    <h1>Smart Campus Energy Monitoring System</h1>
+    <p>Daily Electricity Consumption and Energy-Saving Targets</p>
+</header>
+
+<main>
+    <h2>Building Energy Dashboard</h2>
+    <p>Daily electricity consumption is monitored against a warning limit of 100 kWh.</p>
+
+    <div class="buildings">
+
+        <div class="card">
+            <h3>Academic Block</h3>
+            <p class="consumption">125 kWh</p>
+            <p class="target">Energy-saving target: 100 kWh/day</p>
+            <div class="warning">
+                Warning: Consumption exceeds the limit by 25 kWh.
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>Library</h3>
+            <p class="consumption">85 kWh</p>
+            <p class="target">Energy-saving target: 90 kWh/day</p>
+            <div class="safe">
+                Consumption is within the 100 kWh warning limit.
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>Hostel Block</h3>
+            <p class="consumption">110 kWh</p>
+            <p class="target">Energy-saving target: 95 kWh/day</p>
+            <div class="warning">
+                Warning: Consumption exceeds the limit by 10 kWh.
+            </div>
+        </div>
+
+    </div>
+</main>
+
+<footer>
+    Smart Campus Energy Monitoring | Sample Data for Assessment 10
+</footer>
+
+</body>
+</html>
